@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+    <h1>CLOSURE</h1>
+    <pre>
+        1."    function counter(){
+            var counter = 0;
+        
+            function IncreaseCounter() {
+                return counter += 1;
+            };
+        
+            return IncreaseCounter;
+        }
+        
+        var counter = counter();
+        alert(counter());
+        alert(counter());
+        alert(counter());
+        alert(counter());"
+    </pre>
+    <p>Output: 1 2 3 4</p>
+    <p>The given code defines a function called counter that creates a closure. The closure includes a variable called counter initialized to 0 and a nested function called IncreaseCounter. The IncreaseCounter function increments the counter variable by 1 and returns the updated value.
+        After defining the counter function, the code assigns the result of calling counter() to a variable also named counter. This effectively creates an instance of the closure.
+    </p>
+    <hr>
+    <pre>
+        2."let count = 0;
+        (function () {
+          if (count === 0) {
+            let count = 1;
+            console.log(count); // What is logged?
+          }
+          console.log(count); // What is logged?
+        })();"
+    </pre>
+    <p>Output: 0 1</p>
+    <p>The code snippet provided defines a variable count with an initial value of 0. It then immediately invokes an anonymous self-invoking function.
+
+        Within the self-invoking function, there is an if statement that checks if the outer count variable is equal to 0. If it is, a new block-scoped variable count is declared and assigned the value 1 within the scope of the if statement. After that, the value of the inner count variable is logged to the console.
+        The first console.log(count) statement within the if statement will log 1 because it refers to the inner count variable within the block scope.
+
+        The second console.log(count) statement outside the if statement will log 0 because it refers to the outer count variable in the global scope, which was not modified within the self-invoking function.</p>
+        <hr>
+    <pre>
+        3. "for (var i = 0; i < 3; i++) {
+            setTimeout(function log() {
+              console.log(i); // What is logged?
+            }, 1000);
+          }"
+    </pre>
+    <p>Output: 3 3 3</p>
+    <p>When this code runs, it will log the number 3 to the console three times, with a delay of 1 second between each log. This may seem counterintuitive at first, but it's due to how closures and the event loop work in JavaScript.
+        All three console.log(i) statements will log 3, indicating that the value of i at the time of execution is 3 for all of them.
+    </p>
+    <hr>
+    <span>4.Write a code to calculate area of a rectangle using inner function. In this case outer function should accept parameter length and inner function should accept parameter breadth.</span>
+    <pre>
+        function calculateArea(length) {
+            function calculateBreadthArea(breadth) {
+              return length * breadth;
+            }
+          
+            return calculateBreadthArea;
+          }
+          
+          var rectangleArea = calculateArea(5); 
+          var area = rectangleArea(8);
+          
+          console.log(area); //Output:40
+    </pre>
+    <hr>
+    <span>5.Take a variable in outer function and create an inner function to increase the counter every time it is called</span>
+    <pre>
+        function counter() {
+            var count = 0; // Counter variable declared in the outer function
+          
+            function increaseCounter() {
+              count++; // Increase the counter variable by 1
+              console.log("Counter increased! Current count: " + count);
+            }
+          
+            function resetCounter() {
+              count = 0; // Reset the counter variable to 0
+              console.log("Counter reset!");
+            }
+          
+            return {
+              increment: increaseCounter,
+              reset: resetCounter
+            };
+          }
+          
+          var myCounter = counter(); // Outer function called and object with inner functions returned
+          
+          myCounter.increment(); // Output: Counter increased! Current count: 1
+          myCounter.increment(); // Output: Counter increased! Current count: 2
+          myCounter.reset(); // Output: Counter reset!
+          myCounter.increment(); // Output: Counter increased! Current count: 1
+    </pre>
+    <hr>
+    <pre>
+        6. "Print Output
+
+        var a = 12;
+        (function () {
+          alert(a);
+        })();"
+    </pre>
+    <p>Output: 12</p>
+    <p>The given code snippet declares a variable a with a value of 12. It then immediately invokes an anonymous self-invoking function.
+
+        Within the self-invoking function, there is an alert statement that displays the value of the variable a.
+        
+        Therefore, when this code runs, it will display an alert dialog with the value 12</p>
+        <hr>
+    <pre>
+        7. "var a = 10;
+        var x = (function () {
+          var a = 12;
+          return function () {
+            alert(a);
+          };
+        })();
+        x();"
+    </pre>
+    <p>Output: 12</p>
+    <p>The given code snippet declares a variable a with a value of 10. It then defines a variable x as the result of an immediately-invoked function expression (IIFE).
+
+        The IIFE itself declares a variable a with a value of 12. It then returns an anonymous function that, when invoked, displays the value of the inner variable a using the alert function.</p>
+    <pre>
+        8. "var globalVar = ""xyz"";
+
+        (function outerFunc(outerArg) {
+            var outerVar = 'a';
+            
+            (function innerFunc(innerArg) {
+            var innerVar = 'b';
+            
+            console.log(
+                ""outerArg = "" + outerArg + ""\n"" +
+                ""innerArg = "" + innerArg + ""\n"" +
+                ""outerVar = "" + outerVar + ""\n"" +
+                ""innerVar = "" + innerVar + ""\n"" +
+                ""globalVar = "" + globalVar);
+            
+            })(456);
+        })(123);"
+    </pre>
+    <p>Output: outerArg = 123 <br>
+        innerArg = 456 <br>
+        outerVar = a <br>
+        innerVar = b <br>
+        globalVar = xyz</p>
+    <p>The outer function outerFunc is defined with a parameter outerArg and a variable outerVar. It is immediately invoked with an argument of 123.
+        Within outerFunc, the inner function innerFunc is defined with a parameter innerArg and a variable innerVar. It is immediately invoked with an argument of 456.
+        Inside innerFunc, the console.log statement prints the values of outerArg, innerArg, outerVar, innerVar, and globalVar.</p>
+        <script src="./index.js"></script>
+</body>
+</html>
